@@ -2,10 +2,8 @@ package service;
 
 import dao.AccountDAOImpl;
 import dao.IAccountDAO;
-import dao.VasiDedomenwn;
 import dto.AccountDTO;
 import model.Account;
-import model.IAccount;
 import model.User;
 import service.exceptions.AccountAlreadyExistsException;
 import service.exceptions.AccountDoesNotExistException;
@@ -41,12 +39,11 @@ public class AccountServiceImpl implements IAccountService<AccountDTO, Account>{
 
         if (!DAO.accountExists(id)){
 
-            VasiDedomenwn.getDatabase().put(id, newAccount);
             DAO.insert(id, newAccount);
 
             System.out.println("Account created successfully");
             System.out.println("Your new account's info is " + newAccount);
-            System.out.println(VasiDedomenwn.getDatabase().get(id));
+
         } else throw new AccountAlreadyExistsException(id);
     }
 
