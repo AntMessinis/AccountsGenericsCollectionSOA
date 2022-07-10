@@ -13,7 +13,7 @@ import service.exceptions.InvalidSSNException;
 import java.util.Map;
 
 public class JointAccountServiceImpl implements IAccountService<JointAccountDTO, JointAccount>{
-    private final ServiceHelper<JointAccountDTO, JointAccount> helper = new ServiceHelper<>();
+    private final ServiceHelper<JointAccountDTO> helper = new ServiceHelper<>();
     private final IJointAccoundDAO DAO;
 
     //This class has a single instance
@@ -62,8 +62,6 @@ public class JointAccountServiceImpl implements IAccountService<JointAccountDTO,
         if (DAO.accountExists(id)) {
             User holder = helper.extractHolder(dto);
             User secondHolder = helper.extractSecondHolder(dto);
-
-            double balance= helper.extractBalanceAmount(dto);
 
             JointAccount updatedAccount = DAO.get(id);
 

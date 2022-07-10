@@ -15,7 +15,7 @@ import java.util.Map;
 public class AccountServiceImpl implements IAccountService<AccountDTO, Account>{
 
     private final IAccountDAO DAO = new AccountDAOImpl();
-    private final ServiceHelper<AccountDTO, Account> helper = new ServiceHelper<>();
+    private final ServiceHelper<AccountDTO> helper = new ServiceHelper<>();
 
     //This class has a single instance
     private static final AccountServiceImpl accountService = new AccountServiceImpl();
@@ -61,10 +61,13 @@ public class AccountServiceImpl implements IAccountService<AccountDTO, Account>{
         if (DAO.accountExists(id)){
             User holder = helper.extractHolder(dto);
             Account updatedAccount = DAO.get(id);
+
             updatedAccount.setHolder(holder);
+
             DAO.update(id, updatedAccount);
             System.out.println("Account updated successfully");
             System.out.println("Your updated account's info is " + updatedAccount);
+            
         } else throw new AccountDoesNotExistException(id);
 
     }

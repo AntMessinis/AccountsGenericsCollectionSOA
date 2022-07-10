@@ -1,22 +1,18 @@
 package service;
 
-import dao.IGenericAccountDAO;
-import dao.IJointOverdraftAccountDAO;
 import dao.IOverdraftAccountDAO;
 import dao.OverdraftAccountDAOImpl;
 import dto.OverdraftAccountDTO;
-import model.Account;
 import model.OverdraftAccount;
 import model.User;
 import service.exceptions.AccountAlreadyExistsException;
 import service.exceptions.AccountDoesNotExistException;
-import service.exceptions.InsufficientBalanceException;
 import service.exceptions.InvalidSSNException;
 
 import java.util.Map;
 
 public class OverdraftAccountServiceImpl implements IAccountService<OverdraftAccountDTO, OverdraftAccount>{
-    private final ServiceHelper<OverdraftAccountDTO, OverdraftAccount> helper = new ServiceHelper<>();
+    private final ServiceHelper<OverdraftAccountDTO> helper = new ServiceHelper<>();
     private final IOverdraftAccountDAO DAO;
 
     //This class has a single instance
@@ -63,8 +59,9 @@ public class OverdraftAccountServiceImpl implements IAccountService<OverdraftAcc
     public void updateAccount(long id , OverdraftAccountDTO dto) throws AccountDoesNotExistException {
         if (DAO.accountExists(id)){
             User holder = helper.extractHolder(dto);
-            double balance= helper.extractBalanceAmount(dto);
+
             OverdraftAccount updatedAccount = DAO.get(id);
+            updatedAccount.setHolder(holder);
             DAO.update(id, updatedAccount);
             System.out.println("Account updated successfully");
             System.out.println("Your updated account's info is " + updatedAccount);

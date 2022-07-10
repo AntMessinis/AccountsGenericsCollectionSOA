@@ -2,10 +2,9 @@ package service;
 
 import dto.AbstractDTO;
 import dto.JoinableDTO;
-import model.AbstractAccount;
 import model.User;
 
-public class ServiceHelper<D extends AbstractDTO, A extends AbstractAccount> {
+public class ServiceHelper<D extends AbstractDTO> {
     User extractHolder(D dto){
         String firstname = dto.getHolder().getFirstname();
         String lastname = dto.getHolder().getLastname();
